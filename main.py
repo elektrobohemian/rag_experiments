@@ -41,7 +41,7 @@ def run_pipeline():
 
     print("Retrieve & Generate Answer:")
     #query = "Does unsupervised ML cover regression tasks?"
-    query= "Does unsupervised ML cover regression tasks?"
+    query= "Who is David?"
     generate_answer(query)
 
 if __name__ == "__main__":

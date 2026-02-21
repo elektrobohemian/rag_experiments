@@ -2,6 +2,8 @@ import faiss
 import pickle
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from my_secrets import secrets
+from model_setup import current_models as cm
 
 def load_faiss_index(index_path="faiss_index.index"):
     """
@@ -33,8 +35,10 @@ def retrieve_similar_chunks(query, index, text_chunks, top_k=3):
         list: Top matching text chunks.
     """
 
+    HF_TOKEN = secrets.get('HF_TOKEN')
     # Embed the query
-    model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+    # models are cached at ~/.cache/huggingface
+    model = SentenceTransformer(cm.get('SENTENCE_TRANSFORMER'), token=HF_TOKEN)
     # Ensure query vector is float32 as required by FAISS
     query_vector = model.encode([query]).astype('float32')
 

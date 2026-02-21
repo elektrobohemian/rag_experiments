@@ -2,6 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 from retrieve_faiss import load_faiss_index, load_metadata, retrieve_similar_chunks
 from my_secrets import secrets
+from model_setup import current_models as cm
 
 def generate_answer(query, top_k=3):
     """
@@ -19,11 +20,12 @@ def generate_answer(query, top_k=3):
     context = "\n\n".join(context_chunks)
 
     # Load open-source LLM
-    model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+
+    model_name = cm.get('LLM_ANSWER_GENERATION')
     print(f"Loading LLM: {model_name}")
 
     # Load tokenizer and model, using a device map for efficient loading
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name,token=HF_TOKEN)
     #model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto",
                                                  token=HF_TOKEN)  # removed torch_dtype=float16 due to deprecation warning
