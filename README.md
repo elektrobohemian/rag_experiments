@@ -15,3 +15,9 @@ token of your own. Otherwise, the scripts will not work as expected.
 You can find a sample file called [``my_secrets.py.sample``](./my_secrets.py.sample) that can be simply renamed to ``my_secrets.py``.
 
 __ATTENTION:__ Do not call the file ``secrets.py`` or you will run into problems caused by numpy.
+
+## Choosing Models
+
+If you want to change the models used in this simple RAG system, you might want to change the content 
+in [``model_setup.py``](./model_setup.py) according to your needs. The modification will affect the whole pipeline, i.e.
+the same sentence tranformers will be used for indexing and retrieval etc. .
