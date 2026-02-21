@@ -6,6 +6,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 html_base_path = "/Users/david/src/__datasets/2025_llm_forschung/2025_10_02_fb3_web/www.hwr-berlin.de/hwr-berlin/fachbereiche-und-bps/fb-3-allgemeine-verwaltung/"
+# set to True if we have to deal with HWR pages
+HWR_specific_parsing=True
 
 # utility method that displays a given text and the current time
 def printLog(text):
@@ -69,6 +71,9 @@ def process_html():
     printLog(f"Found {len(html_files):,} HTML files of {total_files_in_dataset:,} files in crawled directory.")
 
     printLog("Processing HTML files and extracting document links...")
+    if HWR_specific_parsing:
+        print("\t\t\t\t\t\t\t\tHWR specific parsing enabled.")
+
     running_index=0
     for html_file in html_files:
         if not os.path.exists(html_file):
@@ -80,9 +85,17 @@ def process_html():
             #title = soup.title.string if soup.title else "untitled"
             title="from_html"
             txt_name=f"{running_index}_{title}"
-            raw_text = soup.get_text()
-            write_text_file(txt_name, raw_text)
+
+            if HWR_specific_parsing:
+                real_contents=soup.find_all(class_="inner stack--xl")
+                raw_text = ""
+                for r in real_contents:
+                    raw_text = raw_text + r.get_text()
+                write_text_file(txt_name, raw_text)
+            else:
+                raw_text = soup.get_text()
+                write_text_file(txt_name, raw_text)
 
 if __name__ == "__main__":
     process_html()
-    printLog("Finished.")
+    printLog("Done.")
