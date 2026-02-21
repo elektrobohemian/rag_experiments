@@ -1,7 +1,7 @@
 import re
 
 def clean_text(text: str) -> str:
-    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'\s+', ' ', text) # replaces multiple whitespaces characters by one
     # the original line only matches basic Latin Unicode characters which would only work for English texts
     # every character that is not plain ASCII gets replaced by ' '
     # text = re.sub(r'[^\x00-\x7F]+', ' ', text)

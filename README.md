@@ -3,14 +3,19 @@ RAG experiments
 
 ## Prerequisites
 
-You have to _manually__ create a file called ``my_secrets.py`` with the following content:
+Create a Python virtual environment and install all dependencies:
+```
+pip install -r requirements.txt 
+```
+
+Then, you have to _manually__ create a file called ``my_secrets.py`` with the following content:
 ```
 secrets = {
     'HF_TOKEN': "place_your_hugging_face_token_here"
 }
 ```
 In this file you will have to replace ``place_your_hugging_face_token_here`` with a [Hugging Face](https://huggingface.co) 
-token of your own. Otherwise, the scripts will not work as expected.
+token of your own. Otherwise, the scripts will not work as expected and some models will not be loaded.
 
 You can find a sample file called [``my_secrets.py.sample``](./my_secrets.py.sample) that can be simply renamed to ``my_secrets.py``.
 
