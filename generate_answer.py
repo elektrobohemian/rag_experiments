@@ -1,12 +1,15 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 from retrieve_faiss import load_faiss_index, load_metadata, retrieve_similar_chunks
-
+from my_secrets import secrets
 
 def generate_answer(query, top_k=3):
     """
     Retrieves relevant chunks and generates a final answer.
     """
+
+    HF_TOKEN = secrets.get('HF_TOKEN')
+
     # Load FAISS index and metadata
     index = load_faiss_index()
     text_chunks = load_metadata()
@@ -16,11 +19,14 @@ def generate_answer(query, top_k=3):
     context = "\n\n".join(context_chunks)
 
     # Load open-source LLM
-    print("Loading LLM...")
     model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    print(f"Loading LLM: {model_name}")
+
     # Load tokenizer and model, using a device map for efficient loading
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
+    #model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto",
+                                                 token=HF_TOKEN)  # removed torch_dtype=float16 due to deprecation warning
 
     # Build the prompt
     prompt = f"""

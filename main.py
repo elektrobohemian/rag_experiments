@@ -41,7 +41,7 @@ def run_pipeline():
 
     print("Retrieve & Generate Answer:")
     #query = "Does unsupervised ML cover regression tasks?"
-    query= "Welche Studiengänge gibt es am Fachbereich 3?"
+    query= "Does unsupervised ML cover regression tasks?"
     generate_answer(query)
 
 if __name__ == "__main__":

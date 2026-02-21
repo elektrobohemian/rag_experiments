@@ -217,3 +217,8 @@ cython_debug/
 /plots
 /reports
 /data
+
+# my_secrets.py has to be ignored as it contains passwords, tokens etc.
+my_secrets.py
+faiss_metadata.pkl
+faiss_index.index
