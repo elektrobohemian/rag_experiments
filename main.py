@@ -13,7 +13,7 @@ from store_faiss import build_faiss_index, save_metadata
 from generate_answer import generate_answer
 
 
-def run_pipeline():
+def run_full_pipeline():
     """
     Runs the full end-to-end RAG workflow.
     """
@@ -40,9 +40,16 @@ def run_pipeline():
     print("Stored embeddings and metadata successfully.\n")
 
     print("Retrieve & Generate Answer:")
-    #query = "Does unsupervised ML cover regression tasks?"
-    query= "Who is David?"
-    generate_answer(query)
+    answer_question()
+
+def answer_question(top_k=3):
+    print("Retrieve & Generate Answer:")
+    # query = "Does unsupervised ML cover regression tasks?"
+    query = "Wer ist David Zellhöfer?"
+    generate_answer(query,top_k=top_k)
 
 if __name__ == "__main__":
-    run_pipeline()
+    # run the full pipeline
+    run_full_pipeline()
+    # run only the answer generation
+    #answer_question()
