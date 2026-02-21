@@ -1,5 +1,6 @@
 # based on https://www.kdnuggets.com/7-steps-to-build-a-simple-rag-system-from-scratch by Kanwal Mehreen
 # edited by David Zellhöfer to ensure operativeness in 2026
+import pickle
 
 # Data preparation
 from prepare_data import prepare_docs
@@ -19,7 +20,7 @@ def run_full_pipeline():
     """
     print("\nLoad and Clean Data:")
     documents = prepare_docs("data/")
-    print(f"Loaded {len(documents)} clean documents.\n")
+    print(f"\tLoaded {len(documents)} clean documents.\n")
 
     print("Split Text into Chunks:")
     # documents is a list of strings, but split_docs expects a list of documents
@@ -29,7 +30,7 @@ def run_full_pipeline():
 
     # Extract text content from LangChain Document objects
     texts = [c.page_content for c in chunks_as_text]
-    print(f"Created {len(texts)} text chunks.\n")
+    print(f"\tCreated {len(texts)} text chunks.\n")
 
     print("Generate Embeddings:")
     embeddings = get_embeddings(texts)
@@ -39,7 +40,6 @@ def run_full_pipeline():
     save_metadata(texts)
     print("Stored embeddings and metadata successfully.\n")
 
-    print("Retrieve & Generate Answer:")
     answer_question()
 
 def answer_question(top_k=3):
@@ -53,3 +53,8 @@ if __name__ == "__main__":
     run_full_pipeline()
     # run only the answer generation
     #answer_question()
+
+    # DEBUG
+    #print("\nFinished.\n* * * * *\n")
+    #r=pickle.load(open("faiss_metadata.pkl", "rb"))
+    #print(r)

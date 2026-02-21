@@ -10,6 +10,9 @@ def split_docs(documents, chunk_size=500, chunk_overlap=100):
 
     # use the splitter to split docs into chunks
     chunks = splitter.create_documents(documents)
-    print(f"Total chunks created: {len(chunks)}")
 
+    # debug
+    #print(f"DEBUG - Generated chunks:")
+    #for chunk in chunks:
+    #    print(f"\tChunk: {chunk}")
     return chunks

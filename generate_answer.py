@@ -19,10 +19,16 @@ def generate_answer(query, top_k=3):
     context_chunks = retrieve_similar_chunks(query, index, text_chunks, top_k=top_k)
     context = "\n\n".join(context_chunks)
 
+    it=0
+    print("Retrieved chunks:")
+    for c in context_chunks:
+        it+=1
+        print(f"\t{it}. {c}")
+
     # Load open-source LLM
 
     model_name = cm.get('LLM_ANSWER_GENERATION')
-    print(f"Loading LLM: {model_name}")
+    print(f"\nLoading LLM: {model_name}")
 
     # Load tokenizer and model, using a device map for efficient loading
     tokenizer = AutoTokenizer.from_pretrained(model_name,token=HF_TOKEN)

@@ -8,8 +8,18 @@ def prepare_docs(folder_path="data/"):
     # Load Documents
     raw_docs = load_documents(folder_path)
 
+    # debug
+    #print(f"DEBUG - Raw documents:")
+    #for doc in raw_docs:
+    #    print(f"\t{doc}")
+
     # Clean Documents
     cleaned_docs = [clean_text(doc) for doc in raw_docs]
 
-    print(f"Prepared {len(cleaned_docs)} documents.")
+    # debug
+    #print(f"\n* * * * * * *\nDEBUG - Cleaned documents:")
+    #for doc in cleaned_docs:
+    #    print(f"\t{doc}")
+
+    print(f"\tPrepared {len(cleaned_docs)} documents.")
     return cleaned_docs
