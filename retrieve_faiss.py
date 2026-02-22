@@ -45,5 +45,9 @@ def retrieve_similar_chunks(query, index, text_chunks, top_k=3):
     # Search FAISS for nearest vectors
     distances, indices = index.search(query_vector, top_k)
 
+    #print(f"\tDEBUG INDICES: {indices}")
+
+
     print(f"Retrieved top {top_k} similar chunks.")
-    return [text_chunks[i] for i in indices[0]]
+    #return [text_chunks[i] for i in indices[0]]
+    return indices

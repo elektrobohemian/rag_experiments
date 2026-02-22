@@ -19,10 +19,10 @@ def build_faiss_index(embeddings, save_path="faiss_index"):
 
    return index
 
-def save_metadata(text_chunks, path="faiss_metadata.pkl"):
+def save_metadata(text_chunks, full_docs, path="faiss_metadata.pkl"):
    """
-   Saves the mapping of vector positions to text chunks.
+   Saves the mapping of vector positions to text chunks and the full documents in order to access metadata etc. later
    """
    with open(path, "wb") as f:
-       pickle.dump(text_chunks, f)
+       pickle.dump((text_chunks,full_docs), f)
    print(f"Saved text metadata to {path}")

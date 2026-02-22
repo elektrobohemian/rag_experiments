@@ -14,7 +14,8 @@ def prepare_docs(folder_path="data/"):
     #    print(f"\t{doc}")
 
     # Clean Documents
-    cleaned_docs = [clean_text(doc) for doc in raw_docs]
+    #cleaned_docs = [clean_text(doc) for doc in raw_docs]
+    cleaned_docs = [(clean_text(doc),file_name) for doc,file_name in raw_docs]
 
     # debug
     #print(f"\n* * * * * * *\nDEBUG - Cleaned documents:")

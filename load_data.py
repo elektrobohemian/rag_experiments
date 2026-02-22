@@ -4,6 +4,9 @@ def load_documents(folder_path):
     docs = []
     for file in os.listdir(folder_path):
         if file.endswith(".txt"):
-            with open(os.path.join(folder_path, file), 'r', encoding='utf-8') as f:
-                docs.append(f.read())
+            #with open(os.path.join(folder_path, file), 'r', encoding='utf-8') as f:
+            #    docs.append(f.read())
+            current_file = os.path.join(folder_path, file)
+            with open(current_file, 'r', encoding='utf-8') as f:
+                docs.append((f.read(), current_file))
     return docs

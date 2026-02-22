@@ -16,17 +16,25 @@ def generate_answer(query, top_k=3):
     text_chunks = load_metadata()
 
     # Retrieve top relevant chunks
-    context_chunks = retrieve_similar_chunks(query, index, text_chunks, top_k=top_k)
+    #context_chunks = retrieve_similar_chunks(query, index, text_chunks, top_k=top_k)
+    #context = "\n\n".join(context_chunks)
+
+    # get the most similar chunks in form of a list of indices
+    indices = retrieve_similar_chunks(query, index, text_chunks, top_k=top_k)
+
+    # select the relevant text part and the related metadata with the help of the indices
+    context_chunks=[text_chunks[0][i] for i in indices[0]]
+    metadata_chunks=[text_chunks[1][i] for i in indices[0]]
+
     context = "\n\n".join(context_chunks)
 
     it=0
     print("Retrieved chunks:")
     for c in context_chunks:
         it+=1
-        print(f"\t{it}. {c}")
+        print(f"\t{it}.{metadata_chunks[it-1].metadata['file_name']}: {c}")
 
     # Load open-source LLM
-
     model_name = cm.get('LLM_ANSWER_GENERATION')
     print(f"\nLoading LLM: {model_name}")
 
@@ -45,6 +53,9 @@ def generate_answer(query, top_k=3):
     Answer:
     """
 
+    print("\nContext:")
+    print(context)
+
     # Generate output
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     # Use the correct input for model generation
@@ -54,8 +65,12 @@ def generate_answer(query, top_k=3):
     # Decode and clean up the answer, removing the original prompt
     full_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
+    # debug
+    #print(f"\tFull text:\n\t\t >{full_text}<\n")
+
     # Simple way to remove the prompt part from the output
     answer = full_text.split("Answer:")[1].strip() if "Answer:" in full_text else full_text.strip()
 
-    print("\nFinal Answer:")
+    print("\n* * * * * * * * * * * * * * * * * * *\nFinal Answer:\n")
     print(answer)
+    print("Done.")
